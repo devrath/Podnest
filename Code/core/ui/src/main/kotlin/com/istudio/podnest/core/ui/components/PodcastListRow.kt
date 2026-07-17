@@ -14,9 +14,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.istudio.podnest.core.model.Podcast
 import com.istudio.podnest.core.ui.theme.PodnestAccentGradient
 import com.istudio.podnest.core.ui.theme.PodnestTextFaint
@@ -36,7 +38,10 @@ fun PodcastListRow(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         AsyncImage(
-            model = podcast.artworkUrl,
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(podcast.artworkUrl)
+                .crossfade(250)
+                .build(),
             contentDescription = podcast.title,
             modifier = Modifier
                 .size(52.dp)

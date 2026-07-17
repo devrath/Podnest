@@ -26,11 +26,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.istudio.podnest.core.model.Podcast
 import com.istudio.podnest.core.ui.components.EpisodeRow
 import com.istudio.podnest.core.ui.components.ErrorView
@@ -84,7 +86,10 @@ private fun PodcastHeader(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         AsyncImage(
-            model = podcast.artworkUrl,
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(podcast.artworkUrl)
+                .crossfade(250)
+                .build(),
             contentDescription = podcast.title,
             contentScale = ContentScale.Crop,
             modifier = Modifier

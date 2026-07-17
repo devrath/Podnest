@@ -19,9 +19,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.istudio.podnest.core.model.Episode
 import com.istudio.podnest.core.ui.theme.PodnestAccentGradient
 import com.istudio.podnest.core.ui.theme.PodnestTextFaint
@@ -48,7 +50,10 @@ fun EpisodeRow(
     ) {
         if (episode.imageUrl != null) {
             AsyncImage(
-                model = episode.imageUrl,
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(episode.imageUrl)
+                    .crossfade(250)
+                    .build(),
                 contentDescription = episode.title,
                 modifier = Modifier
                     .size(52.dp)
